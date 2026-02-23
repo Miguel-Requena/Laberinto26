@@ -15,4 +15,4 @@ class Bomba(Decorator):
             print("¡BOOM! La bomba ha explotado.")
         else:
             print("La bomba no está activa.")
-        self._elemento.entrar()
+        self.em.entrar()

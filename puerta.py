@@ -1,9 +1,9 @@
 from typing import Optional
-from elemento_mapa import ElementoMapa
+from hoja import Hoja
 from habitacion import Habitacion
 
 
-class Puerta(ElementoMapa):
+class Puerta(Hoja):
     """Representa una puerta entre dos habitaciones."""
     
     def __init__(self):

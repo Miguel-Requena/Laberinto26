@@ -6,7 +6,7 @@ class Decorator(ElementoMapa):
     """Decorador abstracto para elementos del mapa."""
     
     def __init__(self, elemento: ElementoMapa):
-        self._elemento: ElementoMapa = elemento
+        self.em: ElementoMapa = elemento
     
     @abstractmethod
     def entrar(self) -> None:

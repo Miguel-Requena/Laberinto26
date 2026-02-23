@@ -1,7 +1,7 @@
-from elemento_mapa import ElementoMapa
+from hoja import Hoja
 
 
-class Pared(ElementoMapa):
+class Pared(Hoja):
     """Representa una pared en el laberinto."""
     
     def entrar(self) -> None:
