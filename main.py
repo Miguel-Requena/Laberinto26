@@ -1,4 +1,5 @@
 from juego import Juego
+from juegobombas import JuegoBombas
 from bicho import Bicho
 from agresivo import Agresivo
 from perezoso import Perezoso
@@ -98,4 +99,43 @@ if __name__ == "__main__":
     for hab in laberinto.habitaciones:
         print(f"  - Habitación {hab.num}")
     
-    print("\n=== Fin de la demostración del Strategy ===" )
+    print("\n=== Fin de la demostración del Strategy ===")
+    
+    # ====== Demostración del Patrón Decorator con JuegoBombas ======
+    print("\n\n=== Demostración del Patrón Decorator (JuegoBombas) ===\n")
+    
+    # Crear un juego con bombas
+    juego_bombas = JuegoBombas()
+    
+    print("Creando laberinto con JuegoBombas (elementos decorados con bombas)...")
+    laberinto_bombas = juego_bombas.fabricarLab2Hab()
+    
+    hab1_bombas = laberinto_bombas.habitaciones[0]
+    
+    print("\nIntentando entrar al norte (pared con bomba):")
+    hab1_bombas.norte.entrar()
+    
+    print("\nActivando la bomba en la pared norte:")
+    hab1_bombas.norte.activa = True
+    hab1_bombas.norte.entrar()
+    
+    print("\nIntentando atravesar la puerta del este (con bomba):")
+    hab1_bombas.este.activa = True
+    hab1_bombas.este.entrar()
+    
+    print("\n=== Fin de la demostración del Decorator ===")
+    
+    # ====== Demostración del Patrón Iterator ======
+    print("\n\n=== Demostración del Patrón Iterator ===\n")
+    
+    print("Recorriendo todos los elementos de la habitación 1:")
+    for elemento in hab1.recorrer_hijos():
+        print(f"  - Elemento encontrado: {elemento.__class__.__name__}")
+    
+    print("\nRecorriendo todos los elementos de la habitación 1 con bombas:")
+    for elemento in hab1_bombas.recorrer_hijos():
+        print(f"  - Elemento encontrado: {elemento.__class__.__name__}")
+    
+    print("\n=== Fin de la demostración del Iterator ===")
+    
+    print("\n=== Demostración completa finalizada ===" )

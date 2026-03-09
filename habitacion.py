@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING, Dict
+from typing import Optional, TYPE_CHECKING, Dict, List, Iterator
 
 if TYPE_CHECKING:
     from elemento_mapa import ElementoMapa
@@ -44,3 +44,21 @@ class Habitacion:
         print("Orientaciones disponibles en esta habitación:")
         for key, orientacion in self.orientaciones.items():
             print(f"  - {orientacion.get_nombre()}")
+    
+    def get_hijos(self) -> List['ElementoMapa']:
+        """Retorna los hijos (elementos del mapa) en las 4 direcciones."""
+        hijos = []
+        if self.norte:
+            hijos.append(self.norte)
+        if self.sur:
+            hijos.append(self.sur)
+        if self.este:
+            hijos.append(self.este)
+        if self.oeste:
+            hijos.append(self.oeste)
+        return hijos
+    
+    def recorrer_hijos(self, bloque=None) -> Iterator['ElementoMapa']:
+        """Recorre todos los elementos hijos de la habitación (patrón Iterator/Composite)."""
+        for hijo in self.get_hijos():
+            yield from hijo.recorrer(bloque)

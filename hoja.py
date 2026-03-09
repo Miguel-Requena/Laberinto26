@@ -1,4 +1,5 @@
 from elemento_mapa import ElementoMapa
+from typing import Iterator
 
 
 class Hoja(ElementoMapa):
@@ -7,3 +8,7 @@ class Hoja(ElementoMapa):
     def entrar(self) -> None:
         """Método para entrar en el elemento hoja."""
         pass
+    
+    def recorrer(self, bloque) -> Iterator[ElementoMapa]:
+        """Recorre el elemento hoja (retorna solo a sí mismo)."""
+        yield self
