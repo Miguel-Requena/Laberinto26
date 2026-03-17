@@ -1,10 +1,11 @@
 from modo import Modo
+from ente import Ente
 
 
-class Bicho:
+class Bicho(Ente):
     """Contexto que usa el patrón Strategy para cambiar su comportamiento."""
     
-    def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10):
+    def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10, posicion=None):
         """
         Inicializa el bicho con un modo específico.
         
@@ -13,9 +14,8 @@ class Bicho:
             vidas: Puntos de vida del bicho.
             poder: Nivel de poder del bicho.
         """
+        super().__init__(vidas=vidas, poder=poder, posicion=posicion)
         self._modo = modo
-        self.vidas = vidas
-        self.poder = poder
     
     def set_modo(self, modo: Modo) -> None:
         """
@@ -35,3 +35,16 @@ class Bicho:
     def comportarse(self) -> None:
         """Ejecuta el comportamiento según el modo actual (método legacy)."""
         self.actua()
+
+    @property
+    def modo(self) -> Modo:
+        return self._modo
+
+    def __str__(self) -> str:
+        return f"Bicho-{self._modo.__class__.__name__}"
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def printOn(self, aStream) -> None:
+        aStream.write(str(self))

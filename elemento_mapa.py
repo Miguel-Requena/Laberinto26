@@ -9,7 +9,7 @@ class ElementoMapa(ABC):
     """Clase abstracta que representa un elemento del mapa."""
     
     @abstractmethod
-    def entrar(self) -> None:
+    def entrar(self, alguien=None) -> None:
         """Método abstracto para entrar en el elemento."""
         pass
     
@@ -17,3 +17,7 @@ class ElementoMapa(ABC):
     def recorrer(self, bloque) -> Iterator['ElementoMapa']:
         """Método abstracto para recorrer el elemento (patrón Iterator)."""
         pass
+
+    def esPuerta(self) -> bool:
+        """Indica si este elemento es una puerta."""
+        return False

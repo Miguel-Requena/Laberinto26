@@ -12,18 +12,26 @@ class Modo(ABC):
     def actua(self, bicho: 'Bicho') -> None:
         """Define cómo actúa el bicho según su modo."""
         pass
+
+    def camina(self, bicho: 'Bicho') -> None:
+        """Mueve al bicho en una orientación aleatoria desde su posición actual."""
+        if bicho.posicion is None:
+            print("El bicho no tiene posición asignada.")
+            return
+        orientacion = bicho.posicion.obtenerOrientacion()
+        orientacion.caminar(bicho)
     
     @abstractmethod
-    def caminar(self) -> None:
+    def caminar(self, bicho: 'Bicho') -> None:
         """Define cómo camina el bicho."""
         pass
     
     @abstractmethod
-    def atacar(self) -> None:
+    def atacar(self, bicho: 'Bicho') -> None:
         """Define cómo ataca el bicho."""
         pass
     
     @abstractmethod
-    def dormir(self) -> None:
+    def dormir(self, bicho: 'Bicho') -> None:
         """Define cómo duerme el bicho."""
         pass
