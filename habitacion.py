@@ -71,21 +71,18 @@ class Habitacion(ElementoMapa):
         self.poner_en(orientacion, elemento)
 
     def obtener_orientacion_aleatoria(self) -> Orientacion:
-        """Devuelve una orientación aleatoria de la habitación."""
         return random.choice(self.orientaciones)
 
     def obtener_orientacion(self) -> Orientacion:
         return self.obtener_orientacion_aleatoria()
 
     def obtenerOrientacionAleatoria(self) -> Orientacion:
-        """Alias compatible con la nomenclatura del código Pharo."""
         return self.obtener_orientacion_aleatoria()
 
     def obtenerOrientacion(self) -> Orientacion:
         return self.obtener_orientacion()
     
     def mostrar_orientaciones(self) -> None:
-        """Muestra las orientaciones disponibles en la habitación."""
         print("Orientaciones disponibles en esta habitación:")
         for orientacion in self.orientaciones:
             print(f"  - {orientacion.get_nombre()}")

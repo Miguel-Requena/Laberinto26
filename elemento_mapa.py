@@ -6,11 +6,9 @@ if TYPE_CHECKING:
 
 
 class ElementoMapa(ABC):
-    """Clase abstracta que representa un elemento del mapa."""
     
     @abstractmethod
     def entrar(self, alguien=None) -> None:
-        """Método abstracto para entrar en el elemento."""
         pass
     
     @abstractmethod
@@ -19,5 +17,4 @@ class ElementoMapa(ABC):
         pass
 
     def esPuerta(self) -> bool:
-        """Indica si este elemento es una puerta."""
         return False

@@ -4,7 +4,6 @@ from habitacion import Habitacion
 
 
 class Puerta(Hoja):
-    """Representa una puerta entre dos habitaciones."""
     
     def __init__(self):
         self.abierta: bool = False

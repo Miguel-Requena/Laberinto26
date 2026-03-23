@@ -23,15 +23,12 @@ class Modo(ABC):
     
     @abstractmethod
     def caminar(self, bicho: 'Bicho') -> None:
-        """Define cómo camina el bicho."""
         pass
     
     @abstractmethod
     def atacar(self, bicho: 'Bicho') -> None:
-        """Define cómo ataca el bicho."""
         pass
     
     @abstractmethod
     def dormir(self, bicho: 'Bicho') -> None:
-        """Define cómo duerme el bicho."""
         pass

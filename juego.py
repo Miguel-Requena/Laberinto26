@@ -33,7 +33,6 @@ class Juego:
         return hab
     
     def fabricarPuerta(self) -> Puerta:
-        """Factory Method: Crea y retorna una nueva Puerta."""
         return Puerta()
 
     def fabricarNorte(self) -> Norte:
@@ -57,7 +56,6 @@ class Juego:
         ]
     
     def fabricarLab2Hab(self) -> Laberinto:
-        """Factory Method: Crea y retorna un Laberinto con 2 habitaciones conectadas."""
         # Crear el laberinto
         laberinto = Laberinto()
         

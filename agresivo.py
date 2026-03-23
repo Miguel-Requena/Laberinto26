@@ -16,13 +16,10 @@ class Agresivo(Modo):
         self.atacar(bicho)
     
     def caminar(self, bicho: 'Bicho') -> None:
-        """Caminar de forma agresiva."""
         print("  - Camina rápidamente y con determinación")
     
     def atacar(self, bicho: 'Bicho') -> None:
-        """Atacar ferozmente."""
-        print("  - ¡Ataca con toda su fuerza!")
+        print("  - ¡Ataca de forma agresiva!")
     
     def dormir(self, bicho: 'Bicho') -> None:
-        """Dormir (modo agresivo casi no duerme)."""
         print("  - Duerme muy poco, siempre alerta")

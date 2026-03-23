@@ -3,7 +3,7 @@ from ente import Ente
 
 
 class Bicho(Ente):
-    """Contexto que usa el patrón Strategy para cambiar su comportamiento."""
+    """Usa el patrón Strategy para cambiar su comportamiento."""
     
     def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10, posicion=None):
         """
