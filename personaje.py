@@ -1,15 +1,41 @@
+# -*- coding: utf-8 -*-
 from ente import Ente
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from juego import Juego
 
 
 class Personaje(Ente):
-    """Representa al personaje controlado por el jugador."""
-
+    """El personaje controlado por el jugador."""
+    
     def __init__(self, nombre: str, vidas: int = 100, poder: int = 10):
-        super().__init__(vidas=vidas, poder=poder, posicion=None)
+        super().__init__(vidas=vidas, poder=poder)
         self.nombre = nombre
-
+    
+    def buscar_enemigo(self) -> Optional['Ente']:
+        """Busca un bicho en su misma posicion."""
+        if self.juego:
+            return self.juego.buscar_bicho()
+        return None
+    
+    def muero(self) -> None:
+        """El personaje muere."""
+        if self.juego:
+            self.juego.muere_personaje()
+    
+    def ir_a(self, orientacion) -> None:
+        """Se mueve en una direccion."""
+        orientacion.caminar(self)
+    
+    def ir_al_norte(self) -> None:
+        """Se mueve al norte."""
+        if self.posicion:
+            from norte import Norte
+            Norte.default().caminar(self)
+    
     def __str__(self) -> str:
         return self.nombre
-
+    
     def __repr__(self) -> str:
         return str(self)

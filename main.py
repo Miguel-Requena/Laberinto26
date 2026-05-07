@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from juego import Juego
 from juegobombas import JuegoBombas
 from bicho import Bicho
@@ -119,8 +120,8 @@ if __name__ == "__main__":
     hab1_bombas.norte.activa = True
     hab1_bombas.norte.entrar()
     
-    print("\nIntentando atravesar la puerta del este (con bomba):")
-    hab1_bombas.este.activa = True
+    print("\nIntentando atravesar la puerta del este (normal):")
+    hab1_bombas.este.abierta = True
     hab1_bombas.este.entrar()
     
     print("\n=== Fin de la demostración del Decorator ===")

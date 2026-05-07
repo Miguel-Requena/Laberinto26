@@ -1,23 +1,31 @@
+# -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from bicho import Bicho
+    from forma import Forma
 
 
 class Orientacion(ABC):
-    """Clase abstracta que representa una orientación."""
+    """Clase base para orientaciones (patron Strategy + Singleton)."""
     
     @abstractmethod
-    def get_nombre(self) -> str:
-        pass
-
-    @abstractmethod
     def caminar(self, bicho: 'Bicho') -> None:
+        """El bicho camina en esta direccion."""
         pass
-
-    def recorrer(self, bloque, enContenedor) -> None:
-        elemento = getattr(enContenedor, self.get_nombre().lower(), None)
-        if elemento is not None:
-            for _ in elemento.recorrer(bloque):
-                pass
+    
+    @abstractmethod
+    def obtener_elemento(self, forma: 'Forma'):
+        """Obtiene el elemento en esta direccion dentro de una forma."""
+        pass
+    
+    @abstractmethod
+    def poner_elemento(self, elemento, contenedor) -> None:
+        """Pone un elemento en esta direccion dentro de un contenedor."""
+        pass
+    
+    @abstractmethod
+    def recorrer(self, bloque, contenedor) -> None:
+        """Recorre el elemento en esta direccion."""
+        pass

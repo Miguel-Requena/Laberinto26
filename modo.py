@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
@@ -6,29 +7,38 @@ if TYPE_CHECKING:
 
 
 class Modo(ABC):
-    """Clase abstracta que define el comportamiento de un modo (Strategy)."""
+    """Clase base que define el comportamiento de un modo (Strategy)."""
     
-    @abstractmethod
     def actua(self, bicho: 'Bicho') -> None:
-        """Define cómo actúa el bicho según su modo."""
-        pass
-
+        """Patron Template Method: define secuencia fija.
+        Las subclases solo implementan duerme()."""
+        self.camina(bicho)
+        self.ataca(bicho)
+        self.duerme(bicho)
+    
     def camina(self, bicho: 'Bicho') -> None:
-        """Mueve al bicho en una orientación aleatoria desde su posición actual."""
+        """Mueve al bicho en una orientacion aleatoria."""
         if bicho.posicion is None:
-            print("El bicho no tiene posición asignada.")
+            print("El bicho no tiene posicion asignada.")
             return
-        orientacion = bicho.posicion.obtenerOrientacion()
+        orientacion = bicho.posicion.obtener_orientacion_aleatoria()
         orientacion.caminar(bicho)
     
+    def ataca(self, bicho: 'Bicho') -> None:
+        """El bicho ataca al enemigo."""
+        bicho.atacar()
+    
     @abstractmethod
-    def caminar(self, bicho: 'Bicho') -> None:
+    def duerme(self, bicho: 'Bicho') -> None:
+        """Define cuanto duerme segun el modo. ABSTRACTO en base."""
         pass
     
     @abstractmethod
-    def atacar(self, bicho: 'Bicho') -> None:
+    def es_agresivo(self) -> bool:
+        """Retorna True si el modo es agresivo."""
         pass
     
     @abstractmethod
-    def dormir(self, bicho: 'Bicho') -> None:
+    def es_perezoso(self) -> bool:
+        """Retorna True si el modo es perezoso."""
         pass

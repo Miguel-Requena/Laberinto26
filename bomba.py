@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from decorator import Decorator
 from pared import Pared
 
@@ -11,10 +12,30 @@ class Bomba(Decorator):
         super().__init__(elemento)
         self.activa: bool = False
     
+    def activar(self) -> None:
+        """Activa la bomba."""
+        print("Bomba activada")
+        self.activa = True
+    
+    def desactivar(self) -> None:
+        """Desactiva la bomba."""
+        print("Bomba desactivada")
+        self.activa = False
+    
     def entrar(self, alguien=None) -> None:
         """Acción de entrar en un elemento con bomba."""
         if self.activa:
-            print("¡BOOM! La bomba ha explotado.")
-        else:
-            print("La bomba no está activa.")
+            if alguien:
+                print(f"{alguien}, te ha explotado una bomba")
+                # TODO: quitar vidas a alguien
+            else:
+                print("¡BOOM! La bomba ha explotado.")
         self.em.entrar(alguien)
+    
+    def es_bomba(self) -> bool:
+        """Retorna True si el elemento es una bomba."""
+        return True
+    
+    def aceptar(self, visitor) -> None:
+        """Patrón Visitor: acepta un visitante y lo procesa."""
+        visitor.visitar_bomba(self)

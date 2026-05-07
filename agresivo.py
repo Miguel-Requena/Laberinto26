@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import time
 from modo import Modo
 from typing import TYPE_CHECKING
 
@@ -8,18 +10,18 @@ if TYPE_CHECKING:
 class Agresivo(Modo):
     """Estrategia concreta: modo agresivo."""
     
-    def actua(self, bicho: 'Bicho') -> None:
-        """Implementación del comportamiento agresivo."""
-        print("Modo AGRESIVO activado:")
-        self.camina(bicho)
-        self.caminar(bicho)
-        self.atacar(bicho)
+    def duerme(self, bicho: 'Bicho') -> None:
+        print(f"{bicho} duerme")
+        time.sleep(1)  
     
-    def caminar(self, bicho: 'Bicho') -> None:
-        print("  - Camina rápidamente y con determinación")
+    def es_agresivo(self) -> bool:
+        return True
     
-    def atacar(self, bicho: 'Bicho') -> None:
-        print("  - ¡Ataca de forma agresiva!")
+    def es_perezoso(self) -> bool:
+        return False
     
-    def dormir(self, bicho: 'Bicho') -> None:
-        print("  - Duerme muy poco, siempre alerta")
+    def __str__(self) -> str:
+        return "Agresivo"
+    
+    def __repr__(self) -> str:
+        return str(self)

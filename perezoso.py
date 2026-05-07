@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import time
 from modo import Modo
 from typing import TYPE_CHECKING
 
@@ -8,21 +10,18 @@ if TYPE_CHECKING:
 class Perezoso(Modo):
     """Estrategia concreta: modo perezoso."""
     
-    def actua(self, bicho: 'Bicho') -> None:
-        """Implementación del comportamiento perezoso."""
-        print("Modo PEREZOSO activado:")
-        self.dormir(bicho)
-        self.camina(bicho)
-        self.caminar(bicho)
+    def duerme(self, bicho: 'Bicho') -> None:
+        print(f"{bicho} duerme")
+        time.sleep(3)  
     
-    def caminar(self, bicho: 'Bicho') -> None:
-        """Caminar de forma perezosa."""
-        print("  - Camina lentamente, arrastrando los pies")
+    def es_agresivo(self) -> bool:
+        return False
     
-    def atacar(self, bicho: 'Bicho') -> None:
-        """Atacar (modo perezoso casi no ataca)."""
-        print("  - Ataca débilmente, sin ganas")
+    def es_perezoso(self) -> bool:
+        return True
     
-    def dormir(self, bicho: 'Bicho') -> None:
-        """Dormir mucho."""
-        print("  - Duerme profundamente y mucho tiempo")
+    def __str__(self) -> str:
+        return "Perezoso"
+    
+    def __repr__(self) -> str:
+        return str(self)

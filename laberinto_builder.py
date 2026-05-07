@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from armario import Armario
 from agresivo import Agresivo
 from bicho import Bicho

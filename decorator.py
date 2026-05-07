@@ -1,21 +1,23 @@
-from abc import abstractmethod
-from elemento_mapa import ElementoMapa
-from typing import Iterator
+# -*- coding: utf-8 -*-
+from abc import ABC, abstractmethod
+from hoja import Hoja
 
 
-class Decorator(ElementoMapa):
-    """Decorador abstracto para elementos del mapa."""
+class Decorator(Hoja, ABC):
+    """Patron Decorator."""
     
-    def __init__(self, elemento: ElementoMapa):
-        self.em: ElementoMapa = elemento
+    def __init__(self, elemento=None):
+        super().__init__()
+        if elemento is None:
+            from pared import Pared
+            elemento = Pared()
+        self.em = elemento
     
     @abstractmethod
     def entrar(self, alguien=None) -> None:
-        """Método abstracto para entrar en el elemento decorado."""
         pass
     
-    def recorrer(self, bloque) -> Iterator[ElementoMapa]:
-        """Recorre el elemento decorado."""
+    def recorrer(self, bloque):
         if callable(bloque):
             bloque(self)
         yield self

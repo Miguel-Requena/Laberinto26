@@ -1,22 +1,10 @@
+# -*- coding: utf-8 -*-
 from juego import Juego
-from bomba import Bomba
-from pared import Pared
-from puerta import Puerta
-from elemento_mapa import ElementoMapa
+from pared_bomba import ParedBomba
 
 
 class JuegoBombas(Juego):
-    """Juego especializado que crea elementos con bombas.
-    Hereda de Juego y sobrescribe los Factory Methods."""
+    """Variante con bombas en lugar de paredes."""
     
-    def fabricarPared(self) -> ElementoMapa:
-        """Factory Method: Crea y retorna una Pared decorada con Bomba."""
-        pared = Pared()
-        bomba = Bomba(pared)
-        return bomba
-    
-    def fabricarPuerta(self) -> ElementoMapa:
-        """Factory Method: Crea y retorna una Puerta decorada con Bomba."""
-        puerta = Puerta()
-        bomba = Bomba(puerta)
-        return bomba
+    def fabricar_pared(self) -> ParedBomba:
+        return ParedBomba()

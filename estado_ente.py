@@ -1,10 +1,7 @@
-from abc import ABC, abstractmethod
-
-
-class EstadoEnte(ABC):
-    @abstractmethod
+# -*- coding: utf-8 -*-
+class EstadoEnte:
     def nombre(self) -> str:
-        pass
+        return "EstadoEnte"
 
 
 class Vivo(EstadoEnte):

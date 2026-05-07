@@ -7,8 +7,8 @@ if TYPE_CHECKING:
     from forma import Forma
 
 
-class Noroeste(Orientacion):
-    """Orientacion NOROESTE (Singleton)."""
+class Suroeste(Orientacion):
+    """Orientacion SUROESTE (Singleton)."""
     
     _instancia = None
     
@@ -18,24 +18,24 @@ class Noroeste(Orientacion):
         return cls._instancia
     
     def caminar(self, bicho: 'Bicho') -> None:
-        """El bicho camina hacia el noroeste."""
+        """El bicho camina hacia el suroeste."""
         if bicho.posicion is None:
             return
-        em = bicho.posicion.forma.no
+        em = bicho.posicion.forma.so
         em.entrar(bicho)
     
     def obtener_elemento(self, forma: 'Forma'):
-        return forma.no
+        return forma.so
     
     def poner_elemento(self, elemento, contenedor) -> None:
-        contenedor.no = elemento
+        contenedor.so = elemento
     
     def recorrer(self, bloque, contenedor) -> None:
-        contenedor.no.recorrer(bloque)
+        contenedor.so.recorrer(bloque)
     
     @staticmethod
     def default():
-        return Noroeste()
+        return Suroeste()
     
     def __str__(self) -> str:
-        return "Noroeste"
+        return "Suroeste"

@@ -1,50 +1,48 @@
-from modo import Modo
+# -*- coding: utf-8 -*-
 from ente import Ente
+from modo import Modo
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from personaje import Personaje
 
 
 class Bicho(Ente):
-    """Usa el patrón Strategy para cambiar su comportamiento."""
+    """Bicho: usa Strategy (Modo) para comportamiento."""
     
-    def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10, posicion=None):
-        """
-        Inicializa el bicho con un modo específico.
-        
-        Args:
-            modo: La estrategia de comportamiento del bicho.
-            vidas: Puntos de vida del bicho.
-            poder: Nivel de poder del bicho.
-        """
-        super().__init__(vidas=vidas, poder=poder, posicion=posicion)
+    def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10):
+        super().__init__(vidas=vidas, poder=poder)
         self._modo = modo
     
-    def set_modo(self, modo: Modo) -> None:
-        """
-        Cambia el modo del bicho en tiempo de ejecución.
-        
-        Args:
-            modo: El nuevo modo de comportamiento.
-        """
-        self._modo = modo
-        print(f"El bicho ha cambiado su modo de comportamiento a {modo.__class__.__name__}")
-    
-    def actua(self) -> None:
-        """El bicho actúa según su modo actual."""
-        print(f"[Bicho - Vidas: {self.vidas}, Poder: {self.poder}]")
-        self._modo.actua(self)
-    
-    def comportarse(self) -> None:
-        """Ejecuta el comportamiento según el modo actual (método legacy)."""
-        self.actua()
-
     @property
     def modo(self) -> Modo:
         return self._modo
-
+    
+    def set_modo(self, modo: Modo) -> None:
+        self._modo = modo
+        print(f"El bicho cambio a modo {modo}")
+    
+    def actua(self) -> None:
+        if self.esta_vivo():
+            print(f"[Bicho - Vidas: {self.vidas}, Poder: {self.poder}]")
+            self._modo.actua(self)
+    
+    def buscar_enemigo(self) -> Optional['Personaje']:
+        if self.juego:
+            return self.juego.buscar_personaje(self)
+        return None
+    
+    def muero(self) -> None:
+        self.vidas = 0
+        if self.juego:
+            self.juego.muere_bicho(self)
+        print(f"{self} ha muerto")
+    
+    def es_agresivo(self) -> bool:
+        return self._modo.es_agresivo()
+    
+    def es_perezoso(self) -> bool:
+        return self._modo.es_perezoso()
+    
     def __str__(self) -> str:
-        return f"Bicho-{self._modo.__class__.__name__}"
-
-    def __repr__(self) -> str:
-        return str(self)
-
-    def printOn(self, aStream) -> None:
-        aStream.write(str(self))
+        return f"Bicho-{self._modo}"
