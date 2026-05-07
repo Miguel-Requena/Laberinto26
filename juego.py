@@ -1,6 +1,7 @@
 from typing import Optional
 from laberinto import Laberinto
 from habitacion import Habitacion
+from fase import Inicial
 from pared import Pared
 from puerta import Puerta
 from personaje import Personaje
@@ -18,6 +19,8 @@ class Juego:
         self.laberinto: Optional[Laberinto] = None
         self.personaje: Optional[Personaje] = None
         self.bichos = []
+        # Estado/ fase del juego (Inicial, Jugando, Final)
+        self.fase = Inicial()
     
     # Factory Methods
     def fabricarPared(self) -> Pared:
@@ -97,6 +100,18 @@ class Juego:
         if self.laberinto is None:
             self.crear_laberinto()
         print("Juego iniciado.")
+        # Cambiar fase a Jugando si existe la clase
+        try:
+            from fase import Jugando
+            self.fase = Jugando()
+        except Exception:
+            pass
+
+    def obtener_fase(self) -> str:
+        return getattr(self.fase, 'nombre', lambda: 'Desconocida')()
+
+    def cambiar_fase(self, nueva_fase) -> None:
+        self.fase = nueva_fase
 
     def obtener_habitacion(self, num: int) -> Habitacion | None:
         """Busca una habitación por número dentro del laberinto actual."""
