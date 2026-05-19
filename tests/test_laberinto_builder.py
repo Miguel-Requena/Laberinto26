@@ -5,12 +5,12 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from juego import Juego
-from tunel import Tunel
-from bomba import Bomba
-from bicho import Bicho
-from agresivo import Agresivo
-from perezoso import Perezoso
+from Solucion.juego import Juego
+from Solucion.tunel import Tunel
+from Solucion.bomba import Bomba
+from Solucion.bicho import Bicho
+from Solucion.agresivo import Agresivo
+from Solucion.perezoso import Perezoso
 
 
 class LaberintoBuilderTest(unittest.TestCase):
@@ -55,7 +55,7 @@ class LaberintoBuilderTest(unittest.TestCase):
         self.director.builder = None  # no builder necesario aquí
 
         # Agregar personaje
-        self.juego.agregar_personaje('Pepe')
+        self.juego.agregar_personaje('Miguel')
 
     # Helpers que replican los métodos Smalltalk del profesor
     def comprobar_armario(self, num, contenedor):
@@ -136,10 +136,10 @@ class LaberintoBuilderTest(unittest.TestCase):
         self.assertEqual(otraHab.num, otroNum)
 
         # fabricar orientaciones usando las clases del juego (Norte/Sur/Este/Oeste)
-        from norte import Norte
-        from sur import Sur
-        from este import Este
-        from oeste import Oeste
+        from Solucion.norte import Norte
+        from Solucion.sur import Sur
+        from Solucion.este import Este
+        from Solucion.oeste import Oeste
 
         orient_map = {'Norte': Norte.default(), 'Sur': Sur.default(), 'Este': Este.default(), 'Oeste': Oeste.default()}
 

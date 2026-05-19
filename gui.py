@@ -2,11 +2,11 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from juego import Juego
-from juegobombas import JuegoBombas
-from bicho import Bicho
-from agresivo import Agresivo
-from perezoso import Perezoso
+from Solucion.juego import Juego
+from Solucion.juegobombas import JuegoBombas
+from Solucion.bicho import Bicho
+from Solucion.agresivo import Agresivo
+from Solucion.perezoso import Perezoso
 
 
 class LaberintoGUI(tk.Tk):
@@ -310,16 +310,16 @@ class LaberintoGUI(tk.Tk):
         person = self.juego.person
         try:
             if direccion == 'N':
-                from norte import Norte
+                from Solucion.norte import Norte
                 Norte.default().caminar(person)
             elif direccion == 'S':
-                from sur import Sur
+                from Solucion.sur import Sur
                 Sur.default().caminar(person)
             elif direccion == 'E':
-                from este import Este
+                from Solucion.este import Este
                 Este.default().caminar(person)
             elif direccion == 'W':
-                from oeste import Oeste
+                from Solucion.oeste import Oeste
                 Oeste.default().caminar(person)
         except Exception as e:
             print("Movimiento falló:", e)
