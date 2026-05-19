@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 
 from Solucion.juego import Juego
 from Solucion.juegobombas import JuegoBombas
@@ -28,6 +28,9 @@ class LaberintoGUI(tk.Tk):
 
         self.btn_create_bombas = ttk.Button(toolbar, text="Crear laberinto (bombas)", command=lambda: self.crear_laberinto(True))
         self.btn_create_bombas.pack(side=tk.LEFT, padx=(6, 0))
+
+        self.btn_load_json = ttk.Button(toolbar, text="Cargar desde JSON", command=self.cargar_desde_json)
+        self.btn_load_json.pack(side=tk.LEFT, padx=(6, 0))
 
         self.lbl_count = ttk.Label(toolbar, text="Habitaciones: 0")
         self.lbl_count.pack(side=tk.LEFT, padx=10)
@@ -129,6 +132,51 @@ class LaberintoGUI(tk.Tk):
             self.on_hab_select(None)
         self.redibujar()
         messagebox.showinfo("Laberinto", f"Laberinto con 2 habitaciones creado en modo {'bombas' if con_bombas else 'normal'}")
+
+    def cargar_desde_json(self):
+        fichero = filedialog.askopenfilename(title="Seleccionar archivo JSON", filetypes=[("JSON files", "*.json"), ("All files", "*")])
+        if not fichero:
+            return
+        self.iniciarJuego(ruta=fichero)
+
+    def iniciarJuego(self, ruta: str = None):
+        """Cargar un juego desde un fichero JSON usando Director.
+
+        Si `ruta` es None se abre un diálogo para elegir el fichero.
+        """
+        if ruta is None:
+            fichero = filedialog.askopenfilename(title="Seleccionar archivo JSON", filetypes=[("JSON files", "*.json"), ("All files", "*")])
+            if not fichero:
+                return
+        else:
+            fichero = ruta
+
+        try:
+            from Builder.director import Director
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo importar Director: {e}")
+            return
+
+        try:
+            director = Director()
+            juego = director.procesar(fichero)
+            if juego is None:
+                messagebox.showerror("Error", "El archivo no produjo un juego válido")
+                return
+            self.juego = juego
+            # algunos builders colocan el laberinto en juego.laberinto o builder.laberinto
+            self.laberinto = getattr(juego, 'laberinto', None)
+            # actualizar vista
+            self.actualizar_lista()
+            self.actualizar_lista_bichos()
+            self.actualizar_estado_juego()
+            if self.lst_habs.size() > 0:
+                self.lst_habs.select_set(0)
+                self.on_hab_select(None)
+            self.redibujar()
+            messagebox.showinfo("Laberinto", f"Juego cargado desde: {fichero}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error cargando juego: {e}")
 
     def actualizar_lista(self):
         self.lst_habs.delete(0, tk.END)
