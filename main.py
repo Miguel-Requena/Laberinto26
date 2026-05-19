@@ -7,6 +7,7 @@ from perezoso import Perezoso
 
 
 if __name__ == "__main__":
+
     print("=== Demostración del Patrón Factory Method ===\n")
     
     # Crear el juego

@@ -178,32 +178,28 @@ class Juego:
             if hasattr(e, 'activar') and hasattr(e, 'es_bomba') and e.es_bomba():
                 e.activar()
         if self.laberinto:
-            for _ in self.laberinto.recorrer(fn):
-                pass
+            self.laberinto.recorrer(fn)
     
     def desactivar_bombas(self) -> None:
         def fn(e):
             if hasattr(e, 'desactivar') and hasattr(e, 'es_bomba') and e.es_bomba():
                 e.desactivar()
         if self.laberinto:
-            for _ in self.laberinto.recorrer(fn):
-                pass
+            self.laberinto.recorrer(fn)
     
     def abrir_puertas(self) -> None:
         def fn(e):
             if hasattr(e, 'abrir') and hasattr(e, 'es_puerta') and e.es_puerta():
                 e.abrir()
         if self.laberinto:
-            for _ in self.laberinto.recorrer(fn):
-                pass
+            self.laberinto.recorrer(fn)
     
     def cerrar_puertas(self) -> None:
         def fn(e):
             if hasattr(e, 'cerrar') and hasattr(e, 'es_puerta') and e.es_puerta():
                 e.cerrar()
         if self.laberinto:
-            for _ in self.laberinto.recorrer(fn):
-                pass
+            self.laberinto.recorrer(fn)
     
     def clonar(self) -> Laberinto:
         if self.prototipo:
