@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from hoja import Hoja
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterator
 
 if TYPE_CHECKING:
     from personaje import Personaje
@@ -33,7 +33,7 @@ class Cofre(Hoja):
         else:
             self.abrir()
     
-    def recorrer(self, bloque) -> None:
+    def recorrer(self, bloque) -> Iterator[Hoja]:
         """Recorre el cofre (es una hoja, no tiene hijos)."""
         if callable(bloque):
             bloque(self)

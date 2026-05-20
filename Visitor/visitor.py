@@ -2,7 +2,7 @@
 
 
 class Visitor:
-    """Interfaz base de visitantes para el patrón Visitor."""
+    """Interfaz base de visitantes para el patron Visitor."""
 
     def visitar_armario(self, un_armario):
         pass
@@ -21,7 +21,7 @@ class Visitor:
 
     def visitar_tunel(self, un_tunel):
         pass
-    
+
     def visitar_cofre(self, un_cofre):
         pass
 
@@ -29,4 +29,7 @@ class Visitor:
         pass
 
     def visitar_trampa(self, una_trampa):
+        pass
+
+    def visitar_moneda(self, una_moneda):
         pass

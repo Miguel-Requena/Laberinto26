@@ -6,7 +6,7 @@ from .laberinto_builder_rombo import LaberintoBuilderRombo
 
 
 class Director:
-    """Director del patrón Builder para construir laberintos desde JSON."""
+    """Director del patron Builder para construir laberintos desde JSON."""
 
     def __init__(self, builder=None, dict=None):
         self.builder = builder
@@ -44,6 +44,8 @@ class Director:
             return self.builder.fabricarPocionEn(padre, unDic.get("curacion", 25))
         elif tipo == "trampa":
             return self.builder.fabricarTrampaEn(padre, unDic.get("dano", 10))
+        elif tipo == "moneda":
+            return self.builder.fabricarMonedaEn(padre, unDic.get("valor", 1))
         else:
             return None
 

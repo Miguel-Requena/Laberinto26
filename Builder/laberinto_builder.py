@@ -9,6 +9,7 @@ from Solucion.este import Este
 from Solucion.habitacion import Habitacion
 from Solucion.juego import Juego
 from Solucion.laberinto import Laberinto
+from Solucion.moneda import Moneda
 from Solucion.noreste import Noreste
 from Solucion.noroeste import Noroeste
 from Solucion.norte import Norte
@@ -56,6 +57,9 @@ class LaberintoBuilder:
 
     def fabricarTrampa(self, dano: int = 10) -> Trampa:
         return Trampa(dano)
+
+    def fabricarMoneda(self, valor: int = 1) -> Moneda:
+        return Moneda(valor)
 
     def fabricarForma(self):
         return Cuadrado()
@@ -154,24 +158,31 @@ class LaberintoBuilder:
         tn = Tunel()
         unCont.agregar_hijo(tn)
         return tn
-    # ==== Extensión 1: Cofres ====
+
+    # ==== Extension 1: Cofres ====
     def fabricarCofreEn(self, unCont, contenido: str = "tesoro"):
         cf = self.fabricarCofre(contenido)
         unCont.agregar_hijo(cf)
         return cf
-    # ==== Extensión 2: Pociones ====
+
+    # ==== Extension 2: Pociones ====
     def fabricarPocionEn(self, unCont, curacion: int = 25):
         poc = self.fabricarPocion(curacion)
         unCont.agregar_hijo(poc)
         return poc
 
-    # ==== Extensión 3: Trampas ====
+    # ==== Extension 3: Trampas ====
     def fabricarTrampaEn(self, unCont, dano: int = 10):
         tr = self.fabricarTrampa(dano)
         unCont.agregar_hijo(tr)
         return tr
 
-    # Compatibilidad con nombre previo usado en tests/demos.
+    # ==== Extension 4: Monedas ====
+    def fabricarMonedaEn(self, unCont, valor: int = 1):
+        mon = self.fabricarMoneda(valor)
+        unCont.agregar_hijo(mon)
+        return mon
+
     def fabricarTramapaEn(self, unCont, dano: int = 10):
         return self.fabricarTrampaEn(unCont, dano)
 

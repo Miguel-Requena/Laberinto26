@@ -48,6 +48,10 @@ class LaberintoBuilderTest(unittest.TestCase):
                         from Solucion.trampa import Trampa
                         dano = hijo.get('dano', 10)
                         hab.agregar_hijo(Trampa(dano))
+                    elif hijo.get('tipo') == 'moneda':
+                        from Solucion.moneda import Moneda
+                        valor = hijo.get('valor', 1)
+                        hab.agregar_hijo(Moneda(valor))
 
         # Añadir bichos 
         for b in self.dict.get('bichos', []):
@@ -147,6 +151,10 @@ class LaberintoBuilderTest(unittest.TestCase):
             nada = False
             self.comprobar_trampa_en(padre)
 
+        if unDic.get('tipo') == 'moneda':
+            nada = False
+            self.comprobar_moneda_en(padre)
+
         if nada:
             self.fail('Elemento desconocido en el diccionario: %s' % unDic)
 
@@ -176,6 +184,15 @@ class LaberintoBuilderTest(unittest.TestCase):
                 break
         self.assertIsNotNone(trampa)
         self.assertTrue(trampa.es_trampa())
+
+    def comprobar_moneda_en(self, unContenedor):
+        moneda = None
+        for each in getattr(unContenedor, 'hijos', []):
+            if hasattr(each, 'es_moneda') and each.es_moneda():
+                moneda = each
+                break
+        self.assertIsNotNone(moneda)
+        self.assertTrue(moneda.es_moneda())
 
     def comprobar_puerta_de(self, unNum, unaOr, otroNum, otraOr):
         unaHab = self.juego.obtener_habitacion(unNum)
@@ -293,6 +310,9 @@ class LaberintoBuilderTest(unittest.TestCase):
             def visitar_trampa(self, trampa):
                 pass
 
+            def visitar_moneda(self, moneda):
+                pass
+
         class VisitorCerrarPuertas:
             def visitar_armario(self, armario):
                 pass
@@ -319,6 +339,9 @@ class LaberintoBuilderTest(unittest.TestCase):
                 pass
 
             def visitar_trampa(self, trampa):
+                pass
+
+            def visitar_moneda(self, moneda):
                 pass
 
         vAP = VisitorAbrirPuertas()
