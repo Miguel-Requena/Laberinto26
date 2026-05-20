@@ -25,7 +25,7 @@ class LaberintoBuilderTest(unittest.TestCase):
         self.juego = Juego()
         self.juego.fabricar_lab_4hab()
 
-        # Añadir bombas según el JSON
+        # Añadir bombas 
         for entry in self.dict.get('laberinto', []):
             if entry.get('tipo') == 'habitacion':
                 num = entry.get('num')
@@ -35,8 +35,13 @@ class LaberintoBuilderTest(unittest.TestCase):
                 for hijo in entry.get('hijos', []):
                     if hijo.get('tipo') == 'bomba':
                         hab.agregar_hijo(Bomba())
+                    # Añadir cofres
+                    elif hijo.get('tipo') == 'cofre':  
+                        from Solucion.cofre import Cofre
+                        contenido = hijo.get('contenido', 'moneda')
+                        hab.agregar_hijo(Cofre(contenido))
 
-        # Añadir bichos según el JSON
+        # Añadir bichos 
         for b in self.dict.get('bichos', []):
             modo = b.get('modo')
             pos = b.get('posicion')
@@ -52,12 +57,11 @@ class LaberintoBuilderTest(unittest.TestCase):
             pass
 
         self.director = D()
-        self.director.builder = None  # no builder necesario aquí
+        self.director.builder = None  
 
         # Agregar personaje
         self.juego.agregar_personaje('Miguel')
 
-    # Helpers que replican los métodos Smalltalk del profesor
     def comprobar_armario(self, num, contenedor):
         arm = None
         for each in getattr(contenedor, 'hijos', []):
@@ -123,8 +127,21 @@ class LaberintoBuilderTest(unittest.TestCase):
             for each in lista:
                 self.comprobar_laberinto_recursivo(each, contenedor)
 
+        if unDic.get('tipo') == 'cofre':
+            nada = False
+            self.comprobar_cofre_en(padre)
+
         if nada:
             self.fail('Elemento desconocido en el diccionario: %s' % unDic)
+
+    def comprobar_cofre_en(self, unContenedor):
+        cofre = None
+        for each in getattr(unContenedor, 'hijos', []):
+            if hasattr(each, 'es_cofre') and each.es_cofre():
+                cofre = each
+                break
+        self.assertIsNotNone(cofre)
+        self.assertTrue(cofre.es_cofre())
 
     def comprobar_puerta_de(self, unNum, unaOr, otroNum, otraOr):
         unaHab = self.juego.obtener_habitacion(unNum)
@@ -167,7 +184,6 @@ class LaberintoBuilderTest(unittest.TestCase):
         self.assertIsNone(tunel.laberinto)
         self.comprobar_funcionamiento_tunel(tunel)
 
-    # Tests que replican los del profesor
     def test_iniciales(self):
         self.assertIsNotNone(self.juego)
         self.assertIsNotNone(self.juego.laberinto)
@@ -216,31 +232,47 @@ class LaberintoBuilderTest(unittest.TestCase):
         self.assertTrue(all(not p.esta_abierta() for p in puertas))
 
         class VisitorAbrirPuertas:
-            def visitar_puerta(self, puerta):
-                puerta.abrir()
-            def visitar_habitacion(self, hab):
+            def visitar_armario(self, armario):
                 pass
-            def visitar_armario(self, arm):
-                pass
+
             def visitar_bomba(self, bomba):
                 pass
-            def visitar_tunel(self, tunel):
+
+            def visitar_habitacion(self, habitacion):
                 pass
+
             def visitar_pared(self, pared):
                 pass
 
-        class VisitorCerrarPuertas:
             def visitar_puerta(self, puerta):
-                puerta.cerrar()
-            def visitar_habitacion(self, hab):
-                pass
-            def visitar_armario(self, arm):
-                pass
-            def visitar_bomba(self, bomba):
-                pass
+                puerta.abrir()
+
             def visitar_tunel(self, tunel):
                 pass
+
+            def visitar_cofre(self, cofre):
+                pass
+
+        class VisitorCerrarPuertas:
+            def visitar_armario(self, armario):
+                pass
+
+            def visitar_bomba(self, bomba):
+                pass
+
+            def visitar_habitacion(self, habitacion):
+                pass
+
             def visitar_pared(self, pared):
+                pass
+
+            def visitar_puerta(self, puerta):
+                puerta.cerrar()
+
+            def visitar_tunel(self, tunel):
+                pass
+
+            def visitar_cofre(self, cofre):
                 pass
 
         vAP = VisitorAbrirPuertas()

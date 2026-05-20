@@ -3,6 +3,7 @@ from Solucion.armario import Armario
 from Solucion.agresivo import Agresivo
 from Solucion.bicho import Bicho
 from Solucion.bomba import Bomba
+from Solucion.cofre import Cofre
 from Solucion.cuadrado import Cuadrado
 from Solucion.este import Este
 from Solucion.habitacion import Habitacion
@@ -44,6 +45,9 @@ class LaberintoBuilder:
 
     def fabricarPuerta(self) -> Puerta:
         return Puerta()
+
+    def fabricarCofre(self, contenido: str = "tesoro") -> Cofre:
+        return Cofre(contenido)
 
     def fabricarForma(self):
         return Cuadrado()
@@ -142,6 +146,11 @@ class LaberintoBuilder:
         tn = Tunel()
         unCont.agregar_hijo(tn)
         return tn
+
+    def fabricarCofreEn(self, unCont, contenido: str = "tesoro"):
+        cf = self.fabricarCofre(contenido)
+        unCont.agregar_hijo(cf)
+        return cf
 
     def fabricarPuertaLado1(self, num1: int, or1: str, Lado2: int, or2: str) -> Puerta:
         pt = self.fabricarPuerta()

@@ -21,3 +21,6 @@ class Visitor:
 
     def visitar_tunel(self, un_tunel):
         pass
+    
+    def visitar_cofre(self, un_cofre):
+        pass

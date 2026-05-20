@@ -9,6 +9,8 @@ from Solucion.juegobombas import JuegoBombas
 from Solucion.bicho import Bicho
 from Solucion.agresivo import Agresivo
 from Solucion.perezoso import Perezoso
+from Solucion.cofre import Cofre
+from Builder.laberinto_builder import LaberintoBuilder
 
 
 if __name__ == "__main__":
@@ -132,8 +134,43 @@ if __name__ == "__main__":
     
     print("\n=== Fin de la demostración del Decorator ===")
     
-    # ====== Demostración del Patrón Iterator ======
-    print("\n\n=== Demostración del Patrón Iterator ===\n")
+    # ====== Extensión 1: Cofre como hoja nueva ======
+    print("\n\n=== Demostración de la Extensión Cofre ===\n")
+    
+    # Crear cofres de forma manual
+    print("Creando cofres manualmente:")
+    cofre1 = Cofre("tesoro")
+    cofre2 = Cofre("recompensa")
+    
+    print(f"  - Cofre 1: {cofre1}")
+    print(f"  - Cofre 2: {cofre2}")
+    
+    print("\nAbrir el cofre 1:")
+    cofre1.abrir(juego.person)
+    
+    print(f"\nEstado después de abrir: {cofre1}")
+    print(f"¿Es un cofre? {cofre1.es_cofre()}")
+    print(f"¿Es una puerta? {cofre1.es_puerta()}")
+    
+    # Crear cofres usando el Builder
+    print("\n\nUsando el Builder para crear cofres:")
+    builder = LaberintoBuilder()
+    
+    hab_test = builder.fabricarHabitacion(10)
+    cofre_builder = builder.fabricarCofreEn(hab_test, "tesoro_especial")
+    
+    print(f"  - Cofre creado con Builder: {cofre_builder}")
+    print(f"  - Contenido: {cofre_builder.contenido}")
+    print(f"  - Agregado a habitación {hab_test.num}: {cofre_builder in hab_test.hijos}")
+    
+    # Demostrar entrada automática al cofre
+    print("\nPersonaje entra a la habitación y el cofre se abre automáticamente:")
+    cofre_nuevo = Cofre("gema")
+    cofre_nuevo.entrar(juego.person)
+    print(f"  - Cofre después de entrar: {cofre_nuevo}")
+    
+    print("\n=== Fin de la demostración de Cofre ===")
+    
     
     print("Recorriendo todos los elementos de la habitación 1:")
     for elemento in hab1.recorrer_hijos():
