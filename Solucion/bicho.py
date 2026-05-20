@@ -9,8 +9,17 @@ if TYPE_CHECKING:
 
 class Bicho(Ente):
     """Bicho: usa Strategy (Modo) para comportamiento."""
-    
-    def __init__(self, modo: Modo, vidas: int = 100, poder: int = 10):
+    #Modifico la función debido a la extension 5 para agregar el nuevo modo de tanque, por lo que cada clase de enemigo tiene unos atributos distintos
+    def __init__(self, modo: Modo, vidas: Optional[int] = None, poder: Optional[int] = None):
+        if vidas is None:
+            vidas = 100 if not modo.es_tanque() else 150 # Tanques tienen más vidas
+        if poder is None:
+            if modo.es_agresivo:
+                poder = 15 # Bichos agresivos tienen más poder
+            elif modo.es_tanque():
+                poder = 5 # Tanques tienen menos poder
+            else:
+                poder = 10 # Bichos perezosos u otros
         super().__init__(vidas=vidas, poder=poder)
         self._modo = modo
     
@@ -43,6 +52,7 @@ class Bicho(Ente):
     
     def es_perezoso(self) -> bool:
         return self._modo.es_perezoso()
-    
+    def es_tanque(self) -> bool:
+        return self._modo.es_tanque()
     def __str__(self) -> str:
         return f"Bicho-{self._modo}"

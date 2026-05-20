@@ -13,7 +13,8 @@ from Solucion.cofre import Cofre
 from Solucion.pocion import Pocion
 from Solucion.trampa import Trampa
 from Builder.laberinto_builder import LaberintoBuilder
-
+from Solucion.moneda import Moneda 
+from Solucion.tanque import Tanque
 
 if __name__ == "__main__":
 
@@ -222,8 +223,63 @@ if __name__ == "__main__":
     print(f"Agregada a habitación {hab_trampa.num}: {trampa_builder in hab_trampa.hijos}")
 
     print("\n=== Fin de la demostración de Trampa ===")
+
+    # ====== Extensión 4: Moneda (Ítem recolectable) ======
+    print("\n\n=== Demostración de la Extensión Moneda ===\n")
+
+    moneda1 = Moneda(10)
+    print(f"Moneda creada manualmente: {moneda1}")
+    print(f"Puntuación actual de {juego.person}: {juego.person.puntos} puntos.")
+
+    print("\nEl personaje pisa e intenta recolectar la moneda de valor 10:")
+    moneda1.entrar(juego.person)
+    print(f"Puntuación final del personaje: {juego.person.puntos} puntos.")
+    print(f"¿Es una moneda? {moneda1.es_moneda()}")
+    print(f"Estado final de la moneda: {moneda1}")
+
+    # Probar fabricación con Builder
+    builder = LaberintoBuilder()
+    hab_moneda = builder.fabricarHabitacion(35)
+    moneda_builder = builder.fabricarMonedaEn(hab_moneda, 15)
+    print(f"\nMoneda creada con Builder: {moneda_builder}")
+    print(f"Agregada a habitación {hab_moneda.num}: {moneda_builder in hab_moneda.hijos}")
+
+    # Demostrar la acumulación continua de puntos
+    print("\nEl personaje recolecta otro montón de monedas (+45 puntos)...")
+    moneda_botin = Moneda(45)
+    moneda_botin.entrar(juego.person)
+    print(f"Puntuación acumulada: {juego.person.puntos} puntos.")
+
+    print("\n=== Fin de la demostración de Moneda ===")
+
+    # ====== Extensión 5: Estrategia Tanque (Nuevo modo del bicho) ======
+    print("\n\n=== Demostración de la Extensión Estrategia Tanque ===\n")
+
+    modo_tanque = Tanque()
+    print("Creando un bicho manualmente con la estrategia Tanque:")
+    bicho_tanque_manual = Bicho(modo_tanque)
+    print(f"  - {bicho_tanque_manual}")
+    print(f"  - ¿Es modo tanque? {bicho_tanque_manual.es_tanque()}")
+    print(f"  - ¿Es modo agresivo? {bicho_tanque_manual.es_agresivo()}")
     
+    print("\nEjecutando ciclo secuencial mediante Template Method (actua):")
+    bicho_tanque_manual.actua()
+
+    # Demostración del parseo y alteración de atributos usando el Builder
+    print("\nUsando el Builder para fabricar un bicho con modo 'Tanque':")
+    builder = LaberintoBuilder()
+    hab_tanque = builder.fabricarHabitacion(40)
     
+    # El builder debe inyectar vidas=150 y poder=5 polimórficamente al detectar "Tanque"
+    bicho_tanque_builder = builder.fabricarBichoModo("Tanque", 40)
+    print(f"  - Bicho fabricado por Builder: {bicho_tanque_builder}")
+    print(f"  - Atributos inyectados por Modo Tanque -> Vidas: {bicho_tanque_builder.vidas}, Poder: {bicho_tanque_builder.poder}")
+    print(f"  - Instalado en la habitación {hab_tanque.num}: {bicho_tanque_builder.posicion == hab_tanque}")
+
+    print("\n=== Fin de la demostración de la Estrategia Tanque ===")
+
+    
+    # ====== Demostración del Iterator original ======
     print("Recorriendo todos los elementos de la habitación 1:")
     for elemento in hab1.recorrer_hijos():
         print(f"  - Elemento encontrado: {elemento.__class__.__name__}")

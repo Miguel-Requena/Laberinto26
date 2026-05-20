@@ -42,3 +42,7 @@ class Modo(ABC):
     def es_perezoso(self) -> bool:
         """Retorna True si el modo es perezoso."""
         pass
+    @abstractmethod
+    def es_tanque(self) -> bool:
+        """Retorna True si el modo es tanque."""
+        pass

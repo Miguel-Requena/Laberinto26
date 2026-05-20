@@ -20,6 +20,9 @@ class Perezoso(Modo):
     def es_perezoso(self) -> bool:
         return True
     
+    def es_tanque(self) -> bool:
+        return False
+    
     def __str__(self) -> str:
         return "Perezoso"
     

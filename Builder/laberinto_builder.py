@@ -23,6 +23,7 @@ from Solucion.sur import Sur
 from Solucion.sureste import Sureste
 from Solucion.suroeste import Suroeste
 from Solucion.tunel import Tunel
+from Solucion.tanque import Tanque
 
 
 class LaberintoBuilder:
@@ -182,6 +183,10 @@ class LaberintoBuilder:
         mon = self.fabricarMoneda(valor)
         unCont.agregar_hijo(mon)
         return mon
+    
+    #==== Extension 5: Tanques como modo de bicho ====
+    def fabricarTanque(self) -> Tanque:
+        return Tanque()
 
     def fabricarTramapaEn(self, unCont, dano: int = 10):
         return self.fabricarTrampaEn(unCont, dano)
@@ -210,7 +215,13 @@ class LaberintoBuilder:
         if hab is None:
             raise ValueError(f"No existe la habitación {posicion} para ubicar el bicho.")
 
-        bicho = Bicho(modo)
+        # Modificación 5 para el bicho Tanque
+        if modo.es_tanque():
+            bicho = Bicho(modo, vidas = 150, poder = 5) # Tanques tienen más vidas pero menos poder
+        elif modo.es_agresivo():
+            bicho = Bicho(modo, vidas = 100, poder=15) # Bichos normales
+        else:
+            bicho = Bicho(modo, vidas = 100, poder=5) # Bichos perezosos u otros
         hab.entrar(bicho)
         self.juego.agregar_bicho(bicho)
         return bicho
