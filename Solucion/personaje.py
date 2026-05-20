@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from Solucion.ente import Ente
 from typing import Optional, TYPE_CHECKING
+from Solucion.item_recolectable import ItemRecolectable
+from Solucion.inventario import Inventario
 
 if TYPE_CHECKING:
     from Solucion.juego import Juego
@@ -13,6 +15,7 @@ class Personaje(Ente):
         super().__init__(vidas=vidas, poder=poder)
         self.nombre = nombre
         self.puntos = 0
+        self.inventario = Inventario()
 
     def buscar_enemigo(self) -> Optional['Ente']:
         """Busca un bicho en su misma posicion."""
@@ -41,6 +44,26 @@ class Personaje(Ente):
             return
         self.puntos += puntos
         print(f"{self} suma {puntos} puntos, total: {self.puntos}")
+
+    def agregar(self, item: ItemRecolectable) -> None:
+        """Método delegado para añadir al inventario."""
+        self.inventario.agregar(item)
+
+    def eliminar(self, item: ItemRecolectable) -> None:
+        """Método delegado para eliminar del inventario."""
+        self.inventario.eliminar(item)
+
+    def tiene_objeto(self, clase_tipo) -> bool:
+        """Método delegado para comprobar la existencia de un tipo de objeto."""
+        return self.inventario.tiene_tipo(clase_tipo)
+
+    def usar_item(self, item: ItemRecolectable, consumir: bool = True) -> bool:
+        """Usa un ítem concreto del inventario."""
+        return self.inventario.usar(item, self, consumir)
+
+    def usar_objeto(self, clase_tipo, consumir: bool = True) -> bool:
+        """Usa el primer ítem de un tipo concreto del inventario."""
+        return self.inventario.usar_tipo(clase_tipo, self, consumir)
 
     def __str__(self) -> str:
         return self.nombre

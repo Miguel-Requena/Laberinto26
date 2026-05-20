@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from Solucion.hoja import Hoja
+from Solucion.item_recolectable import ItemRecolectable
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from Solucion.ente import Ente
 
 
-class Pocion(Hoja):
+class Pocion(ItemRecolectable):
     """Pocion de curacion que recupera vidas al usarse."""
 
     def __init__(self, curacion: int = 25):
@@ -32,8 +32,20 @@ class Pocion(Hoja):
             print(f"La pocion no puede curar a {alguien}")
 
     def entrar(self, alguien=None) -> None:
-        """Al entrar, la pocion se usa de inmediato."""
-        self.usar(alguien)
+        """Al entrar, la pocion se recoge para poder usarse desde el inventario."""
+        if self.usada:
+            print("La pocion ya fue usada")
+            return
+
+        if alguien is None:
+            print(f"La pocion queda disponible para ser recogida ({self.curacion} vidas)")
+            return
+
+        if hasattr(alguien, 'agregar'):
+            print(f"{alguien} recoge una pocion de curacion")
+            alguien.agregar(self)
+        else:
+            self.usar(alguien)
 
     def aceptar(self, visitor) -> None:
         """Patron Visitor."""

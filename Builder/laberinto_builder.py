@@ -14,6 +14,7 @@ from Solucion.este import Este
 from Solucion.habitacion import Habitacion
 from Solucion.juego import Juego
 from Solucion.laberinto import Laberinto
+from Solucion.inventario import Inventario
 from Solucion.moneda import Moneda
 from Solucion.noreste import Noreste
 from Solucion.noroeste import Noroeste
@@ -50,6 +51,9 @@ class LaberintoBuilder:
 
     def fabricarPared(self) -> Pared:
         return Pared()
+
+    def fabricarInventario(self) -> Inventario:
+        return Inventario()
 
     def fabricarPuerta(self) -> Puerta:
         return Puerta()

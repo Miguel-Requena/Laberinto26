@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import os
 import sys
 
@@ -284,6 +285,7 @@ if __name__ == "__main__":
 
     print("\n=== Fin de la demostración de Moneda ===")
 
+
     # ====== Extensión 5: Estrategia Tanque (Nuevo modo del bicho) ======
     print("\n\n=== Demostración de la Extensión Estrategia Tanque ===\n")
 
@@ -309,6 +311,41 @@ if __name__ == "__main__":
     print(f"  - Instalado en la habitación {hab_tanque.num}: {bicho_tanque_builder.posicion == hab_tanque}")
 
     print("\n=== Fin de la demostración de la Estrategia Tanque ===")
+
+
+    # ====== Extensión 6: Inventario del personaje ======
+    print("\n\n=== Demostración de la Extensión Inventario del personaje ===\n")
+
+    builder = LaberintoBuilder()
+    inventario_demo = builder.fabricarInventario()
+    print(f"Inventario fabricado por Builder: {inventario_demo}")
+
+    ruta_json = os.path.join(os.path.dirname(__file__), "..", "laberinto4.json")
+    with open(ruta_json, "r", encoding="utf-8") as archivo:
+        datos_demo = json.load(archivo)
+
+    juego.person.inventario = inventario_demo
+
+    print("El personaje recoge los ítems de demostración definidos en el JSON:")
+    for item_demo in datos_demo.get("inventario_demo", []):
+        if item_demo.get("tipo") == "pocion":
+            item = builder.fabricarPocion(item_demo.get("curacion", 25))
+            item.entrar(juego.person)
+        elif item_demo.get("tipo") == "moneda":
+            item = builder.fabricarMoneda(item_demo.get("valor", 1))
+            item.entrar(juego.person)
+
+    print(f"Inventario actual: {juego.person.inventario}")
+    print(f"¿Tiene pocion? {juego.person.tiene_objeto(Pocion)}")
+    print(f"¿Tiene moneda? {juego.person.tiene_objeto(Moneda)}")
+
+    juego.person.vidas = 40
+    print("\nUsando la pocion desde el inventario:")
+    juego.person.usar_objeto(Pocion)
+    print(f"Vidas tras usar la pocion: {juego.person.vidas}")
+    print(f"Inventario tras consumirla: {juego.person.inventario}")
+
+    print("\n=== Fin de la demostración de Inventario ===")
 
     
     # ====== Demostración del Iterator original ======

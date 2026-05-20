@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from hoja import Hoja
+from Solucion.hoja import Hoja
 from typing import TYPE_CHECKING, Iterator
 
 if TYPE_CHECKING:
-    from personaje import Personaje
+    from Solucion.personaje import Personaje
 
 
 class Cofre(Hoja):
