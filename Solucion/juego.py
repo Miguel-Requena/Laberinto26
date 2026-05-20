@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+from Solucion.fase import Fase, Inicial, Jugando, Final
 from Solucion.laberinto import Laberinto
 from Solucion.habitacion import Habitacion
 from Solucion.puerta import Puerta
@@ -23,7 +24,7 @@ class Juego:
         self.person: Optional[Personaje] = None
         self.hilos = {}
         self.prototipo: Optional[Laberinto] = None
-    
+        self.fase: Fase = Inicial()    
     def fabricar_laberinto(self) -> Laberinto:
         return Laberinto()
     
@@ -118,6 +119,7 @@ class Juego:
         hab1 = self.obtener_habitacion(1)
         if hab1:
             hab1.entrar(self.person)
+        self.fase = Jugando()
     
     def obtener_habitacion(self, num: int) -> Optional[Habitacion]:
         if self.laberinto:
@@ -160,11 +162,13 @@ class Juego:
     def muere_bicho(self, bicho) -> None:
         self.eliminar_bicho(bicho)
         if self.todos_muertos():
+            self.fase = Final()
             print(f"Fin juego. Gana {self.person}")
     
     def muere_personaje(self) -> None:
         self.person.vidas = 0
-        print("Manematao. Fin del juego")
+        self.fase = Final()
+        print("Has muerto. Fin del juego")
         self.terminar_todos_los_bichos()
     
     def todos_muertos(self) -> bool:
@@ -201,3 +205,5 @@ class Juego:
         if self.prototipo:
             return copy.deepcopy(self.prototipo)
         return copy.deepcopy(self.laberinto)
+    def esta_activo(self) -> bool:
+        return self.fase.nombre() == "Jugando"

@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
+import sys
+# Añade la carpeta raíz (Laberinto26) al camino de búsqueda de Python
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from Solucion.armario import Armario
 from Solucion.agresivo import Agresivo
 from Solucion.bicho import Bicho
@@ -24,7 +29,6 @@ from Solucion.sureste import Sureste
 from Solucion.suroeste import Suroeste
 from Solucion.tunel import Tunel
 from Solucion.tanque import Tanque
-
 
 class LaberintoBuilder:
     """Construye el juego y sus elementos a partir de la estructura descrita en JSON."""

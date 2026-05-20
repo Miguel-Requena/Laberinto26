@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
+import os
+import sys
 
-from .laberinto_builder import LaberintoBuilder
-from .laberinto_builder_rombo import LaberintoBuilderRombo
-
-
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    
+from Builder.laberinto_builder import LaberintoBuilder
+from Builder.laberinto_builder_rombo import LaberintoBuilderRombo
 class Director:
     """Director del patron Builder para construir laberintos desde JSON."""
 

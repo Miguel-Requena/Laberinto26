@@ -141,6 +141,38 @@ if __name__ == "__main__":
     print("\n\n=== Creando personaje para las demostraciones ===")
     juego.agregar_personaje("Héroe")
     print(f"Personaje creado: {juego.person} con {juego.person.vidas} vidas\n")
+
+    # =========================================================================
+    # Demostración de las Condiciones de Fin de Juego
+    # =========================================================================
+    print("=== Demostración de las Condiciones de Fin de Juego (Patrón State) ===")
+    
+    # 1. Simulación de la condición de Victoria
+    print("\n--- Probando simulación de Victoria ---")
+    juego_victoria = Juego()
+    juego_victoria.fabricarLab2Hab()
+    juego_victoria.agregar_personaje("Héroe Ganador")
+    bicho_temporal = Bicho(modo_perezoso)
+    juego_victoria.agregar_bicho(bicho_temporal)
+    
+    print(f"  * Estado inicial de la partida: '{juego_victoria.fase.nombre()}'")
+    print("  * Eliminando al último bicho con vida del laberinto...")
+    juego_victoria.muere_bicho(bicho_temporal)
+    print(f"  * Estado final de la partida: '{juego_victoria.fase.nombre()}'")
+    print(f"  * ¿El juego sigue activo? {juego_victoria.esta_activo()}")
+    
+    # 2. Simulación de la condición de Derrota
+    print("\n--- Probando simulación de Derrota ---")
+    juego_derrota = Juego()
+    juego_derrota.fabricarLab2Hab()
+    juego_derrota.agregar_personaje("Héroe Caído")
+    
+    print(f"  * Estado inicial de la partida: '{juego_derrota.fase.nombre()}'")
+    print("  * Activando evento (muere_personaje)...")
+    juego_derrota.muere_personaje()
+    print(f"  * Estado final de la partida: '{juego_derrota.fase.nombre()}'")
+    print(f"  * ¿El juego sigue activo? {juego_derrota.esta_activo()}")
+    print("\n=== Fin de la demostración de Fin de Juego ===\n\n")
     
     # ====== Extensión 1: Cofre como hoja nueva ======
     print("=== Demostración de la Extensión Cofre ===\n")
