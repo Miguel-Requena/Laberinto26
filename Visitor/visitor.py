@@ -24,3 +24,6 @@ class Visitor:
     
     def visitar_cofre(self, un_cofre):
         pass
+
+    def visitar_pocion(self, una_pocion):
+        pass

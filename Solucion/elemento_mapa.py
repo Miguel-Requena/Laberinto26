@@ -50,6 +50,9 @@ class ElementoMapa(ABC):
     
     def es_cofre(self) -> bool:
         return False
+
+    def es_pocion(self) -> bool:
+        return False
     
     def __str__(self) -> str:
         return self.__class__.__name__

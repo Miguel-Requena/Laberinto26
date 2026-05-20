@@ -15,6 +15,7 @@ from Solucion.norte import Norte
 from Solucion.oeste import Oeste
 from Solucion.pared import Pared
 from Solucion.perezoso import Perezoso
+from Solucion.pocion import Pocion
 from Solucion.puerta import Puerta
 from Solucion.sur import Sur
 from Solucion.sureste import Sureste
@@ -48,6 +49,9 @@ class LaberintoBuilder:
 
     def fabricarCofre(self, contenido: str = "tesoro") -> Cofre:
         return Cofre(contenido)
+
+    def fabricarPocion(self, curacion: int = 25) -> Pocion:
+        return Pocion(curacion)
 
     def fabricarForma(self):
         return Cuadrado()
@@ -146,11 +150,16 @@ class LaberintoBuilder:
         tn = Tunel()
         unCont.agregar_hijo(tn)
         return tn
-
+    # ==== Extensión 1: Cofres ====
     def fabricarCofreEn(self, unCont, contenido: str = "tesoro"):
         cf = self.fabricarCofre(contenido)
         unCont.agregar_hijo(cf)
         return cf
+    # ==== Extensión 2: Pociones ====
+    def fabricarPocionEn(self, unCont, curacion: int = 25):
+        poc = self.fabricarPocion(curacion)
+        unCont.agregar_hijo(poc)
+        return poc
 
     def fabricarPuertaLado1(self, num1: int, or1: str, Lado2: int, or2: str) -> Puerta:
         pt = self.fabricarPuerta()

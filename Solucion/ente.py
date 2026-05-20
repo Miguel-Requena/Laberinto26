@@ -38,6 +38,13 @@ class Ente(ABC):
         
         if self.vidas <= 0:
             self.muero()
+
+    def curar(self, cantidad: int) -> None:
+        """Recupera vidas."""
+        if cantidad <= 0:
+            return
+        self.vidas += cantidad
+        print(f"{self} recupera {cantidad} vidas, ahora tiene {self.vidas}")
     
     def esta_vivo(self) -> bool:
         """Retorna si esta vivo."""

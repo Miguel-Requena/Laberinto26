@@ -10,6 +10,7 @@ from Solucion.bicho import Bicho
 from Solucion.agresivo import Agresivo
 from Solucion.perezoso import Perezoso
 from Solucion.cofre import Cofre
+from Solucion.pocion import Pocion
 from Builder.laberinto_builder import LaberintoBuilder
 
 
@@ -170,6 +171,29 @@ if __name__ == "__main__":
     print(f"  - Cofre después de entrar: {cofre_nuevo}")
     
     print("\n=== Fin de la demostración de Cofre ===")
+
+    # ====== Extensión 2: Pocion de curacion como hoja nueva ======
+    print("\n\n=== Demostración de la Extensión Pocion ===\n")
+
+    pocion = Pocion(30)
+    print(f"Pocion creada: {pocion}")
+    print(f"Vidas iniciales del personaje: {juego.person.vidas}")
+
+    juego.person.vidas = 40
+    print("\nUsando la pocion sobre el personaje:")
+    pocion.usar(juego.person)
+    print(f"Vidas tras usar la pocion: {juego.person.vidas}")
+
+    print(f"¿Es una pocion? {pocion.es_pocion()}")
+    print(f"Estado final de la pocion: {pocion}")
+
+    builder = LaberintoBuilder()
+    hab_pocion = builder.fabricarHabitacion(20)
+    pocion_builder = builder.fabricarPocionEn(hab_pocion, 15)
+    print(f"Pocion creada con Builder: {pocion_builder}")
+    print(f"Agregada a habitación {hab_pocion.num}: {pocion_builder in hab_pocion.hijos}")
+
+    print("\n=== Fin de la demostración de Pocion ===")
     
     
     print("Recorriendo todos los elementos de la habitación 1:")
