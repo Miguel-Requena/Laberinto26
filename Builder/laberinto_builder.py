@@ -17,6 +17,7 @@ from Solucion.pared import Pared
 from Solucion.perezoso import Perezoso
 from Solucion.pocion import Pocion
 from Solucion.puerta import Puerta
+from Solucion.trampa import Trampa
 from Solucion.sur import Sur
 from Solucion.sureste import Sureste
 from Solucion.suroeste import Suroeste
@@ -52,6 +53,9 @@ class LaberintoBuilder:
 
     def fabricarPocion(self, curacion: int = 25) -> Pocion:
         return Pocion(curacion)
+
+    def fabricarTrampa(self, dano: int = 10) -> Trampa:
+        return Trampa(dano)
 
     def fabricarForma(self):
         return Cuadrado()
@@ -160,6 +164,16 @@ class LaberintoBuilder:
         poc = self.fabricarPocion(curacion)
         unCont.agregar_hijo(poc)
         return poc
+
+    # ==== Extensión 3: Trampas ====
+    def fabricarTrampaEn(self, unCont, dano: int = 10):
+        tr = self.fabricarTrampa(dano)
+        unCont.agregar_hijo(tr)
+        return tr
+
+    # Compatibilidad con nombre previo usado en tests/demos.
+    def fabricarTramapaEn(self, unCont, dano: int = 10):
+        return self.fabricarTrampaEn(unCont, dano)
 
     def fabricarPuertaLado1(self, num1: int, or1: str, Lado2: int, or2: str) -> Puerta:
         pt = self.fabricarPuerta()

@@ -40,6 +40,14 @@ class LaberintoBuilderTest(unittest.TestCase):
                         from Solucion.cofre import Cofre
                         contenido = hijo.get('contenido', 'moneda')
                         hab.agregar_hijo(Cofre(contenido))
+                    elif hijo.get('tipo') == 'pocion':
+                        from Solucion.pocion import Pocion
+                        curacion = hijo.get('curacion', 25)
+                        hab.agregar_hijo(Pocion(curacion))
+                    elif hijo.get('tipo') == 'trampa':
+                        from Solucion.trampa import Trampa
+                        dano = hijo.get('dano', 10)
+                        hab.agregar_hijo(Trampa(dano))
 
         # Añadir bichos 
         for b in self.dict.get('bichos', []):
@@ -131,6 +139,14 @@ class LaberintoBuilderTest(unittest.TestCase):
             nada = False
             self.comprobar_cofre_en(padre)
 
+        if unDic.get('tipo') == 'pocion':
+            nada = False
+            self.comprobar_pocion_en(padre)
+
+        if unDic.get('tipo') == 'trampa':
+            nada = False
+            self.comprobar_trampa_en(padre)
+
         if nada:
             self.fail('Elemento desconocido en el diccionario: %s' % unDic)
 
@@ -142,6 +158,24 @@ class LaberintoBuilderTest(unittest.TestCase):
                 break
         self.assertIsNotNone(cofre)
         self.assertTrue(cofre.es_cofre())
+
+    def comprobar_pocion_en(self, unContenedor):
+        pocion = None
+        for each in getattr(unContenedor, 'hijos', []):
+            if hasattr(each, 'es_pocion') and each.es_pocion():
+                pocion = each
+                break
+        self.assertIsNotNone(pocion)
+        self.assertTrue(pocion.es_pocion())
+
+    def comprobar_trampa_en(self, unContenedor):
+        trampa = None
+        for each in getattr(unContenedor, 'hijos', []):
+            if hasattr(each, 'es_trampa') and each.es_trampa():
+                trampa = each
+                break
+        self.assertIsNotNone(trampa)
+        self.assertTrue(trampa.es_trampa())
 
     def comprobar_puerta_de(self, unNum, unaOr, otroNum, otraOr):
         unaHab = self.juego.obtener_habitacion(unNum)
@@ -253,6 +287,12 @@ class LaberintoBuilderTest(unittest.TestCase):
             def visitar_cofre(self, cofre):
                 pass
 
+            def visitar_pocion(self, pocion):
+                pass
+
+            def visitar_trampa(self, trampa):
+                pass
+
         class VisitorCerrarPuertas:
             def visitar_armario(self, armario):
                 pass
@@ -273,6 +313,12 @@ class LaberintoBuilderTest(unittest.TestCase):
                 pass
 
             def visitar_cofre(self, cofre):
+                pass
+
+            def visitar_pocion(self, pocion):
+                pass
+
+            def visitar_trampa(self, trampa):
                 pass
 
         vAP = VisitorAbrirPuertas()

@@ -27,3 +27,6 @@ class Visitor:
 
     def visitar_pocion(self, una_pocion):
         pass
+
+    def visitar_trampa(self, una_trampa):
+        pass

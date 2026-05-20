@@ -38,6 +38,12 @@ class Director:
             return self.builder.fabricarBombaEn(padre)
         elif tipo == "tunel":
             return self.builder.fabricarTunelEn(padre)
+        elif tipo == "cofre":
+            return self.builder.fabricarCofreEn(padre, unDic.get("contenido", "tesoro"))
+        elif tipo == "pocion":
+            return self.builder.fabricarPocionEn(padre, unDic.get("curacion", 25))
+        elif tipo == "trampa":
+            return self.builder.fabricarTrampaEn(padre, unDic.get("dano", 10))
         else:
             return None
 

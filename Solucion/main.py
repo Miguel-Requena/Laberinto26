@@ -11,6 +11,7 @@ from Solucion.agresivo import Agresivo
 from Solucion.perezoso import Perezoso
 from Solucion.cofre import Cofre
 from Solucion.pocion import Pocion
+from Solucion.trampa import Trampa
 from Builder.laberinto_builder import LaberintoBuilder
 
 
@@ -135,8 +136,13 @@ if __name__ == "__main__":
     
     print("\n=== Fin de la demostración del Decorator ===")
     
+    # ====== Crear personaje para las extensiones ======
+    print("\n\n=== Creando personaje para las demostraciones ===")
+    juego.agregar_personaje("Héroe")
+    print(f"Personaje creado: {juego.person} con {juego.person.vidas} vidas\n")
+    
     # ====== Extensión 1: Cofre como hoja nueva ======
-    print("\n\n=== Demostración de la Extensión Cofre ===\n")
+    print("=== Demostración de la Extensión Cofre ===\n")
     
     # Crear cofres de forma manual
     print("Creando cofres manualmente:")
@@ -194,6 +200,28 @@ if __name__ == "__main__":
     print(f"Agregada a habitación {hab_pocion.num}: {pocion_builder in hab_pocion.hijos}")
 
     print("\n=== Fin de la demostración de Pocion ===")
+
+    # ====== Extensión 3: Trampa de pinchos como hoja nueva ======
+    print("\n\n=== Demostración de la Extensión Trampa ===\n")
+
+    trampa = Trampa(15)
+    print(f"Trampa creada: {trampa}")
+    print(f"Vida inicial del personaje: {juego.person.vidas}")
+
+    print("\nEl personaje entra en la trampa:")
+    trampa.entrar(juego.person)
+    print(f"Vida tras la trampa: {juego.person.vidas}")
+
+    print(f"¿Es una trampa? {trampa.es_trampa()}")
+    print(f"Estado final de la trampa: {trampa}")
+
+    builder = LaberintoBuilder()
+    hab_trampa = builder.fabricarHabitacion(25)
+    trampa_builder = builder.fabricarTramapaEn(hab_trampa, 20)
+    print(f"Trampa creada con Builder: {trampa_builder}")
+    print(f"Agregada a habitación {hab_trampa.num}: {trampa_builder in hab_trampa.hijos}")
+
+    print("\n=== Fin de la demostración de Trampa ===")
     
     
     print("Recorriendo todos los elementos de la habitación 1:")
