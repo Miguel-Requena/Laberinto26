@@ -251,7 +251,7 @@ if __name__ == "__main__":
 
     builder = LaberintoBuilder()
     hab_trampa = builder.fabricarHabitacion(25)
-    trampa_builder = builder.fabricarTramapaEn(hab_trampa, 20)
+    trampa_builder = builder.fabricarTrampaEn(hab_trampa, 20)
     print(f"Trampa creada con Builder: {trampa_builder}")
     print(f"Agregada a habitación {hab_trampa.num}: {trampa_builder in hab_trampa.hijos}")
 
@@ -317,23 +317,18 @@ if __name__ == "__main__":
     print("\n\n=== Demostración de la Extensión Inventario del personaje ===\n")
 
     builder = LaberintoBuilder()
-    inventario_demo = builder.fabricarInventario()
-    print(f"Inventario fabricado por Builder: {inventario_demo}")
-
     ruta_json = os.path.join(os.path.dirname(__file__), "..", "laberinto4.json")
     with open(ruta_json, "r", encoding="utf-8") as archivo:
         datos_demo = json.load(archivo)
 
+    inventario_demo = builder.fabricarInventarioDemo(datos_demo.get("inventario_demo", []))
+    print(f"Inventario fabricado por Builder: {inventario_demo}")
+
     juego.person.inventario = inventario_demo
 
-    print("El personaje recoge los ítems de demostración definidos en el JSON:")
-    for item_demo in datos_demo.get("inventario_demo", []):
-        if item_demo.get("tipo") == "pocion":
-            item = builder.fabricarPocion(item_demo.get("curacion", 25))
-            item.entrar(juego.person)
-        elif item_demo.get("tipo") == "moneda":
-            item = builder.fabricarMoneda(item_demo.get("valor", 1))
-            item.entrar(juego.person)
+    print("Inventario cargado con los ítems de demostración definidos en el JSON:")
+    for item_demo in juego.person.inventario.items:
+        print(f"  - {item_demo}")
 
     print(f"Inventario actual: {juego.person.inventario}")
     print(f"¿Tiene pocion? {juego.person.tiene_objeto(Pocion)}")
@@ -347,7 +342,16 @@ if __name__ == "__main__":
 
     print("\n=== Fin de la demostración de Inventario ===")
 
-    
+    # ====== Extensión 7: Llave (Ítem recolectable) ======
+    print("\n\n=== Demostración de la Extensión Llave ===\n")
+    llave_demo = builder.fabricarLlave("Llave Prueba")
+    print(f"Llave creada manualmente: {llave_demo}")
+    print("La llave de prueba se añade al inventario:")
+    juego.person.agregar(llave_demo)
+    print(f"Inventario tras recoger llave: {juego.person.inventario}")
+
+    print("\n=== Fin de la demostración de Llave ===")
+
     # ====== Demostración del Iterator original ======
     print("Recorriendo todos los elementos de la habitación 1:")
     for elemento in hab1.recorrer_hijos():

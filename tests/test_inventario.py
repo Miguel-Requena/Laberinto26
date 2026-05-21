@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from Builder.laberinto_builder import LaberintoBuilder
 from Solucion.inventario import Inventario
+from Solucion.llave import Llave
 from Solucion.moneda import Moneda
 from Solucion.personaje import Personaje
 from Solucion.pocion import Pocion
@@ -19,6 +20,21 @@ def test_builder_fabricar_inventario():
     assert isinstance(inventario, Inventario)
     assert inventario.items == []
     print("test_builder_fabricar_inventario PASSED")
+
+
+def test_builder_fabricar_inventario_demo():
+    builder = LaberintoBuilder()
+    inventario = builder.fabricarInventarioDemo([
+        {"tipo": "pocion", "curacion": 40},
+        {"tipo": "moneda", "valor": 12},
+        {"tipo": "llave", "nombre": "Llave Demo"},
+    ])
+
+    assert isinstance(inventario, Inventario)
+    assert inventario.tiene_tipo(Pocion) is True
+    assert inventario.tiene_tipo(Moneda) is True
+    assert inventario.tiene_tipo(Llave) is True
+    print("test_builder_fabricar_inventario_demo PASSED")
 
 
 def test_personaje_recoge_pocion_y_la_usa_desde_inventario():
@@ -61,6 +77,7 @@ if __name__ == "__main__":
 
     tests = [
         test_builder_fabricar_inventario,
+        test_builder_fabricar_inventario_demo,
         test_personaje_recoge_pocion_y_la_usa_desde_inventario,
         test_personaje_recoge_moneda_y_suma_puntos,
         test_usar_objeto_inexistente_devuelve_false,

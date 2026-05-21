@@ -30,6 +30,7 @@ from Solucion.sureste import Sureste
 from Solucion.suroeste import Suroeste
 from Solucion.tunel import Tunel
 from Solucion.tanque import Tanque
+from Solucion.llave import Llave
 
 class LaberintoBuilder:
     """Construye el juego y sus elementos a partir de la estructura descrita en JSON."""
@@ -55,11 +56,16 @@ class LaberintoBuilder:
     def fabricarInventario(self) -> Inventario:
         return Inventario()
 
+    
+
     def fabricarPuerta(self) -> Puerta:
         return Puerta()
 
     def fabricarCofre(self, contenido: str = "tesoro") -> Cofre:
         return Cofre(contenido)
+
+    def fabricarLlave(self, nombre: str = "Llave") -> Llave:
+        return Llave(nombre)
 
     def fabricarPocion(self, curacion: int = 25) -> Pocion:
         return Pocion(curacion)
@@ -185,7 +191,7 @@ class LaberintoBuilder:
         tr = self.fabricarTrampa(dano)
         unCont.agregar_hijo(tr)
         return tr
-
+    
     # ==== Extension 4: Monedas ====
     def fabricarMonedaEn(self, unCont, valor: int = 1):
         mon = self.fabricarMoneda(valor)
@@ -195,9 +201,27 @@ class LaberintoBuilder:
     #==== Extension 5: Tanques como modo de bicho ====
     def fabricarTanque(self) -> Tanque:
         return Tanque()
+    
+    #==== Extension 6: Inventario Demo ====
+    def fabricarInventarioDemo(self, items_demo=None) -> Inventario:
+        inventario = self.fabricarInventario()
+        for item_demo in items_demo or []:
+            tipo = item_demo.get("tipo")
+            if tipo == "pocion":
+                inventario.agregar(self.fabricarPocion(item_demo.get("curacion", 25)))
+            elif tipo == "moneda":
+                inventario.agregar(self.fabricarMoneda(item_demo.get("valor", 1)))
+            elif tipo == "llave":
+                inventario.agregar(self.fabricarLlave(item_demo.get("nombre", "Llave")))
+        return inventario
 
-    def fabricarTramapaEn(self, unCont, dano: int = 10):
-        return self.fabricarTrampaEn(unCont, dano)
+    # ==== Extension 7: Llaves ====
+    def fabricarLlaveEn(self, unCont, nombre: str = "Llave"):
+        llave = self.fabricarLlave(nombre)
+        unCont.agregar_hijo(llave)
+        return llave
+
+    
 
     def fabricarPuertaLado1(self, num1: int, or1: str, Lado2: int, or2: str) -> Puerta:
         pt = self.fabricarPuerta()
@@ -233,3 +257,4 @@ class LaberintoBuilder:
         hab.entrar(bicho)
         self.juego.agregar_bicho(bicho)
         return bicho
+ 

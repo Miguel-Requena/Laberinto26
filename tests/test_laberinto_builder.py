@@ -52,6 +52,10 @@ class LaberintoBuilderTest(unittest.TestCase):
                         from Solucion.moneda import Moneda
                         valor = hijo.get('valor', 1)
                         hab.agregar_hijo(Moneda(valor))
+                    elif hijo.get('tipo') == 'llave':
+                        from Solucion.llave import Llave
+                        nombre = hijo.get('nombre', 'Llave')
+                        hab.agregar_hijo(Llave(nombre))
 
         # Añadir bichos 
         for b in self.dict.get('bichos', []):
@@ -143,6 +147,10 @@ class LaberintoBuilderTest(unittest.TestCase):
             nada = False
             self.comprobar_cofre_en(padre)
 
+        if unDic.get('tipo') == 'llave':
+            nada = False
+            self.comprobar_llave_en(padre)
+
         if unDic.get('tipo') == 'pocion':
             nada = False
             self.comprobar_pocion_en(padre)
@@ -193,6 +201,14 @@ class LaberintoBuilderTest(unittest.TestCase):
                 break
         self.assertIsNotNone(moneda)
         self.assertTrue(moneda.es_moneda())
+
+    def comprobar_llave_en(self, unContenedor):
+        llave = None
+        for each in getattr(unContenedor, 'hijos', []):
+            if hasattr(each, 'entrar') and each.__class__.__name__ == 'Llave':
+                llave = each
+                break
+        self.assertIsNotNone(llave)
 
     def comprobar_puerta_de(self, unNum, unaOr, otroNum, otraOr):
         unaHab = self.juego.obtener_habitacion(unNum)
