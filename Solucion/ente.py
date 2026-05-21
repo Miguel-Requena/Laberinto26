@@ -2,6 +2,8 @@
 from abc import ABC, abstractmethod
 from typing import Optional, TYPE_CHECKING
 
+from Solucion.contenedor import Contenedor
+
 if TYPE_CHECKING:
     from Solucion.juego import Juego
 

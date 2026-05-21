@@ -2,6 +2,8 @@
 from Solucion.contenedor import Contenedor
 from typing import Optional
 
+from Solucion.habitacion import Habitacion
+
 
 class Laberinto(Contenedor):
     """El laberinto es el contenedor principal del juego."""

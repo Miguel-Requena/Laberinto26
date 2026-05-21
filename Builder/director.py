@@ -41,7 +41,16 @@ class Director:
         elif tipo == "tunel":
             return self.builder.fabricarTunelEn(padre)
         elif tipo == "cofre":
-            return self.builder.fabricarCofreEn(padre, unDic.get("contenido", "tesoro"))
+            # soporta flag necesita_llave en JSON
+            contenido = unDic.get("contenido", "tesoro")
+            necesita = unDic.get("necesita_llave", False)
+            cf = self.builder.fabricarCofreEn(padre, contenido)
+            # si el cofre necesita llave, establecer el flag cuando exista el atributo
+            try:
+                cf.necesita_llave = necesita
+            except Exception:
+                pass
+            return cf
         elif tipo == "llave":
             return self.builder.fabricarLlaveEn(padre, unDic.get("nombre", "Llave"))
         elif tipo == "pocion":

@@ -13,6 +13,9 @@ class Personaje(Ente):
 
     def __init__(self, nombre: str, vidas: int = 100, poder: int = 10):
         super().__init__(vidas=vidas, poder=poder)
+        # Ajuste: aumentar poder por defecto para que los ataques del héroe sean efectivos
+        if poder == 10:
+            self.poder = 25
         self.nombre = nombre
         self.puntos = 0
         self.inventario = Inventario()

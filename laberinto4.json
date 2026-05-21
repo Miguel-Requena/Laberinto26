@@ -3,7 +3,7 @@
  "laberinto":[
     {"tipo":"habitacion","num":1,"hijos":[{"tipo":"bomba"},{"tipo":"cofre","contenido":"tesoro"},{"tipo":"pocion","curacion":15},{"tipo":"moneda","valor":5}]},
    {"tipo":"habitacion","num":2,"hijos":[{"tipo":"bomba"},{"tipo":"trampa","dano":10},{"tipo":"moneda","valor":2},{"tipo":"llave","nombre":"Llave Dorada"}]},
-    {"tipo":"habitacion","num":3,"hijos":[{"tipo":"bomba"},{"tipo":"cofre","contenido":"recompensa"},{"tipo":"pocion","curacion":20},{"tipo":"moneda","valor":8}]},
+   {"tipo":"habitacion","num":3,"hijos":[{"tipo":"bomba"},{"tipo":"cofre","contenido":"recompensa","necesita_llave": true},{"tipo":"pocion","curacion":20},{"tipo":"moneda","valor":8}]},
     {"tipo":"habitacion","num":4,"hijos":[{"tipo":"bomba"},{"tipo":"trampa","dano":15},{"tipo":"moneda","valor":3}]}
  ],
  "puertas":[
